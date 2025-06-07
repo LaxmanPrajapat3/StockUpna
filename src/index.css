@@ -1,0 +1,24 @@
+nav{
+
+    /* border-bottom:2px solid green; */
+    box-shadow: 2px 2px 10px gray;
+
+    /* background-color: pink; */
+}
+ button:hover{
+    cursor: pointer;
+}
+
+.footer-icons{
+    padding-left: 10px;
+    
+    /* margin-left: 10px; */
+    padding-bottom: 10px;
+}
+.footer-icons:hover{
+    font-size:xx-large;
+}
+footer{
+    
+    box-shadow: 2px 2px 10px gray;
+}
