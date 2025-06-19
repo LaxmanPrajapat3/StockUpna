@@ -1,23 +1,38 @@
-import { StrictMode } from 'react'
+
 import { createRoot } from 'react-dom/client';
-import './index.css'
-import App from './App.jsx'
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import './index.css';
+import App from './App.jsx';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import LoginPage from './landingpage/Login/LoginPage.jsx';
 import Signup from './landingpage/Signup/Signup.jsx';
 import NavBar from './landingpage/NavBar.jsx';
 import Footer from './landingpage/Footer.jsx';
+import Chatbot from './landingpage/Chatbot.jsx';
+import ProtfolioLandingPage from './ProtfolioAnalyzerPage/ProtfrolioLandingPage/ProtfolioLading.jsx';
+ import PortfolioAnalyzer from '../src/ProtfolioAnalyzerPage/ProtfolioAnalyzerMainPage/ProtfolioAnalyzer.jsx'
+function Layout() {
+  const location = useLocation();
+  const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
+  const hideNav2=location.pathname ==='/protfolio/protfolioAnlyze';  
+
+  return (
+    <>
+      {!hideNav2&&!hideNav && <NavBar />}
+      <Routes>
+        <Route path='/' element={<App />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/protfolio' element={<ProtfolioLandingPage />} />
+      <Route path='/protfolio/protfolioAnlyze' element={<PortfolioAnalyzer/>}/>
+      </Routes>
+      <Chatbot />
+      <Footer />
+    </>
+  );
+}
+
 createRoot(document.getElementById('root')).render(
- 
   <BrowserRouter>
-  <NavBar/>
-  <Routes>
-
-<Route path='/' element={<App/>}/>
-<Route path='/login' element={<LoginPage/>}/>
-<Route path='/signup' element={<Signup/>}/>
-  </Routes>
-
-  <Footer/>
+    <Layout />
   </BrowserRouter>
-)
+);
