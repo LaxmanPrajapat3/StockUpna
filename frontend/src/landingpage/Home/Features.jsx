@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
-import { href } from "react-router-dom";
+
+import Chatbot from "../Chatbot";
 
 export default function Features() {
+  
+
   const features = [
     {
       title: "Smart Investment Assistant",
@@ -13,7 +16,7 @@ export default function Features() {
       title: "Learning Mode",
       desc: "Explore educational courses and tutorial’s at your own pace",
       src: "../src/assets/Learning_Mode_Logo.png",
-      href: "",
+      href: "/learnmode",
     },
     {
       title: "Portfolio Analyzer",
@@ -28,7 +31,7 @@ export default function Features() {
       href: "",
     },
     {
-      title: "Virual Investment"
+      title: "Virtual Trading"
     ,desc: "Learn Investment Virually",
     src:"../src/assets/virtual_investment.png",
     href:"/virtualInvestment",

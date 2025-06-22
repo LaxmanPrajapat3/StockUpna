@@ -4,6 +4,7 @@ import  { useState } from 'react';
 import { FaRobot, FaTimes } from 'react-icons/fa'; // Using react-icons for icons
 
 const Chatbot = () => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     { text: 'Hi! I’m Stockupna’s Smart Investment Assistant. Ask me about stocks, mutual funds, or investing!', sender: 'bot' },
