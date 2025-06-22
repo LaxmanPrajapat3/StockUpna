@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { href } from "react-router-dom";
 
 export default function Features() {
   const features = [
@@ -26,6 +27,12 @@ export default function Features() {
       src: "../src/assets/Custom_Aletrs_Logo.png",
       href: "",
     },
+    {
+      title: "Virual Investment"
+    ,desc: "Learn Investment Virually",
+    src:"../src/assets/virtual_investment.png",
+    href:"/virtualInvestment",
+    }
   ];
 
   const cardVariants = {

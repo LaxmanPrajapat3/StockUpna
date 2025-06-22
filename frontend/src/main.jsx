@@ -10,6 +10,7 @@ import Footer from './landingpage/Footer.jsx';
 import Chatbot from './landingpage/Chatbot.jsx';
 import ProtfolioLandingPage from './ProtfolioAnalyzerPage/ProtfrolioLandingPage/ProtfolioLading.jsx';
  import PortfolioAnalyzer from '../src/ProtfolioAnalyzerPage/ProtfolioAnalyzerMainPage/ProtfolioAnalyzer.jsx'
+ import Virtual_Investment from './Virual_Investment/Virtual_Investment.jsx';
 function Layout() {
   const location = useLocation();
   const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
@@ -24,7 +25,10 @@ function Layout() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/protfolio' element={<ProtfolioLandingPage />} />
       <Route path='/protfolio/protfolioAnlyze' element={<PortfolioAnalyzer/>}/>
+      <Route path='/virtualInvestment' element={<Virtual_Investment/>}></Route>
       </Routes>
+
+
       <Chatbot />
       <Footer />
     </>

@@ -10,7 +10,10 @@ const NavBar = () => {
     <nav className="flex items-center justify-between p-4 shadow-md bg-white relative z-50">
       {/* Logo */}
       <div className="pl-4 md:pl-20 flex items-center">
+      <a href="/">
         <img src="../../src/assets/MainLogo.png" alt="Logo" className="w-24 h-24" />
+        
+        </a>  
       </div>
 
       {/* Desktop Menu */}
