@@ -28,7 +28,7 @@ export default function Features() {
       title: "Custom Alerts & Goals",
       desc: "Set investment goals and get notified of key changes in the market",
       src: "../src/assets/Custom_Aletrs_Logo.png",
-      href: "",
+      href: "/customAlerts",
     },
     {
       title: "Virtual Trading"
