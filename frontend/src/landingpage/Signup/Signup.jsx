@@ -35,7 +35,7 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-left mb-4">
-          <h1 className="text-2xl font-bold text-black">📈 StockMate</h1>
+         
         </div>
 
         <div className="bg-white shadow-md rounded-lg px-8 py-10">
