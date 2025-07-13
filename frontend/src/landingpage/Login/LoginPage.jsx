@@ -1,8 +1,10 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Signup from '../Signup/Signup';
 export default function LoginPage(){
+  const navigater=useNavigate();
   const [formData,setFormData]=useState({email:"",password:""});
   const handleChange=(event)=>{
     setFormData((prev)=>({...prev,[event.target.id]:event.target.value}));
@@ -20,7 +22,12 @@ export default function LoginPage(){
      },
 body:JSON.stringify(formData)  });
 const data =await res.json();
-console.log("Login success:" , data);
+console.log("Login process:" , data);
+if(data.message =="Login Successful"){
+  console.log("work ",data.message);
+  // send user on home page 
+navigater('/');
+}
     }catch(error){
       console.error("Login error:",error);
     }
