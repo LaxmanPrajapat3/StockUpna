@@ -66,4 +66,19 @@ const savedUser= await user1.save();
 });
 
 
+app.post("/login",async (req,res)=>{
+
+    try{
+    const {email,password}=req.body;
+    console.log(email,password);
+
+    
+ res.status(201).json({ message: "User created successfully", user: savedUser });
+}catch(err){
+        console.log(err);
+         res.status(500).json({ message: "Error saving user", error: err });
+    }
+
+})
+
 

@@ -1,7 +1,30 @@
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Signup from '../Signup/Signup';
 export default function LoginPage(){
+  const [formData,setFormData]=useState({email:"",password:""});
+  const handleChange=(event)=>{
+    setFormData((prev)=>({...prev,[event.target.id]:event.target.value}));
+  }
 
+
+  const handleLoginBtn=async (event)=>{
+     event.preventDefault();
+    console.log("Button was Clicked ");
+ 
+ try{
+    const res= await fetch("http://localhost:8000/login",{method:"POST",
+      headers:{
+      "Content-Type":"application/json",
+     },
+body:JSON.stringify(formData)  });
+const data =await res.json();
+console.log("Login success:" , data);
+    }catch(error){
+      console.error("Login error:",error);
+    }
+  }
 return(
 
 
@@ -21,6 +44,8 @@ return(
                 id="email"
                 className="mt-1 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
                 placeholder="you@example.com"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
 
@@ -31,12 +56,15 @@ return(
                 id="password"
                 className="mt-1 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
                 placeholder="********"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
 
             <button
               type="submit"
               className="w-full py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-md font-semibold"
+              onClick={handleLoginBtn}
             >
               Log in
             </button>

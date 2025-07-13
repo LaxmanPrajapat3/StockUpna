@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 export default function Signup() {
+  const navigater =useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
-
+  
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
-
+  
   const handleSignupbtn = async (event) => {
     event.preventDefault(); // prevent form reload
 
@@ -26,6 +27,8 @@ export default function Signup() {
 
       const data = await res.json();
       console.log("Signup success:", data);
+    navigater('/login');
+      
     } catch (error) {
       console.error("Signup error:", error);
     }
