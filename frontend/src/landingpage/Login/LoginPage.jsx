@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Signup from '../Signup/Signup';
+
 export default function LoginPage(){
   const navigater=useNavigate();
   const [formData,setFormData]=useState({email:"",password:""});
@@ -17,6 +17,7 @@ export default function LoginPage(){
  
  try{
     const res= await fetch("http://localhost:8000/login",{method:"POST",
+      credentials:"include",   // required for cookies
       headers:{
       "Content-Type":"application/json",
      },
@@ -27,6 +28,7 @@ if(data.message =="Login Successful"){
   console.log("work ",data.message);
   // send user on home page 
 navigater('/');
+
 }
     }catch(error){
       console.error("Login error:",error);

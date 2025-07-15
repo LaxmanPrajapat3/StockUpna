@@ -13,6 +13,7 @@ import ProtfolioLandingPage from './ProtfolioAnalyzerPage/ProtfrolioLandingPage/
  import Virtual_Investment from './Virual_Investment/Virtual_Investment.jsx';
  import LearningPage from './LearningPage/LearningPage.jsx';
  import CustomAlertsPage from './CustomAlertsPage.jsx/CustomAlertsPage.jsx';
+ import PageNotFound from './PageNotFound.jsx';
 function Layout() {
   const location = useLocation();
   const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
@@ -30,6 +31,8 @@ function Layout() {
       <Route path='/virtualInvestment' element={<Virtual_Investment/>}></Route>
       <Route path='/learnmode' element={<LearningPage/>}></Route>
       <Route path='/customAlerts' element={<CustomAlertsPage/>}></Route>
+      <Route path='*' element={<PageNotFound/>}></Route>
+
       </Routes>
 
 

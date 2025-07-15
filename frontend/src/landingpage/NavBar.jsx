@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn,setIsLoggedIn]=useState(false); // to track user is logggedin or not if user is loggedin we remove loggedin btn from nav bar and add logged out btn 
+  
   const navigater=useNavigate();
 
   const navLinks = [
@@ -20,7 +22,53 @@ export default function Navbar() {
   const  handleSingupbtn=()=>{
     navigater('/signup');
 
+
+
   }
+
+  // handleLogoutBtn
+  const handleLogoutBtn=async()=>{
+try{
+
+    const res =await fetch("http://localhost:8000/logout",{method:"POST",credentials:"include"})
+
+if(res.ok){
+  setIsLoggedIn(false);
+  navigater("/");
+}
+}catch(error){
+  console.error("Logout failed:",error);
+}
+
+  };
+
+  // Check auth status
+ useEffect(()=>{
+
+  const checkAuth=async ()=>{
+  try{
+    const res=await fetch("http://localhost:8000/verify",{method:"GET",credentials:"include"});
+
+if(res.status==200){
+  setIsLoggedIn(true);
+}else{
+  setIsLoggedIn(false);
+}
+}catch(error){
+  setIsLoggedIn(false);
+
+}
+}
+
+// call funcation to check user is logeed in or not 
+checkAuth();
+
+
+
+
+
+
+ },[]);
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
@@ -39,8 +87,17 @@ export default function Navbar() {
               {link.name}
             </a>
           ))}
-          <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 " style={{borderRadius:'5px'}} onClick={handleLoginbtn} >Log in</button>
-          <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 "style={{borderRadius:'5px'}} onClick={handleSingupbtn}>Sign up</button>
+
+          
+          {!isLoggedIn ?(
+
+<>
+            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 " style={{borderRadius:'5px'}} onClick={handleLoginbtn} >Log in</button>
+            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 "style={{borderRadius:'5px'}} onClick={handleSingupbtn}>Sign up</button>
+</>
+          ):(<button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 "style={{borderRadius:'5px'}} onClick={handleLogoutBtn}>Log Out</button>)}
+
+
         </div>
 
         {/* Mobile Menu Button */}
@@ -66,8 +123,24 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
+              
+              
+              {!isLoggedIn &&(
+                <>
+              
               <button className="text-gray-50 font-medium bg-teal-600 p-1 " onClick={handleLoginbtn} style={{borderRadius:'5px'}}>Log in</button>
               <button className="text-gray-50 font-medium bg-teal-600 p-1  " onClick={handleSingupbtn} style={{borderRadius:'5px'}}>Sign up</button>
+
+              
+              
+              </>)}
+{isLoggedIn &&( 
+
+
+                 <button className="text-gray-50 font-medium bg-teal-600 p-1  " onClick={handleLogoutBtn} style={{borderRadius:'5px'}}>Logout</button>
+)}
+              
+
             </div>
           </motion.div>
         )}
