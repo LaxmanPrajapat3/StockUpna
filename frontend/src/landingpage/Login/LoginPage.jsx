@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function LoginPage(){
   const navigater=useNavigate();
   const [formData,setFormData]=useState({email:"",password:""});
@@ -27,6 +28,7 @@ console.log("Login process:" , data);
 if(data.message =="Login Successful"){
   console.log("work ",data.message);
   // send user on home page 
+  
 navigater('/');
 
 }

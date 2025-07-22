@@ -3,18 +3,24 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn,setIsLoggedIn]=useState(false); // to track user is logggedin or not if user is loggedin we remove loggedin btn from nav bar and add logged out btn 
-  
-  const navigater=useNavigate();
+  const [isLoggedIn,setIsLoggedIn]=useState(false); // to track user is logggedin or not if user is loggedin we remove loggedin btn from nav bar and add logged out btn
 
+
+  const [count,setCount]=useState(0);
+
+  const navigater=useNavigate();
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "#" },
     { name: "Features", href: "#" },
   ];
-
+function reloadComponent (){
+  
+  setCount(prev =>prev+1);  
+}
   const  handleLoginbtn=()=>{
     navigater('/login');
 
@@ -34,9 +40,11 @@ try{
 
 if(res.ok){
   setIsLoggedIn(false);
+  reloadComponent();
   navigater("/");
 }
 }catch(error){
+
   console.error("Logout failed:",error);
 }
 
@@ -45,11 +53,12 @@ if(res.ok){
   // Check auth status
  useEffect(()=>{
 
-  const checkAuth=async ()=>{
+  const  checkAuth=async ()=>{
   try{
     const res=await fetch("http://localhost:8000/verify",{method:"GET",credentials:"include"});
 
 if(res.status==200){
+  
   setIsLoggedIn(true);
 }else{
   setIsLoggedIn(false);
@@ -148,3 +157,4 @@ checkAuth();
     </nav>
   );
 }
+

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import AuthCheck from '../authCheckfunction/AuthCheck';
 
 const CustomAlertsPage = () => {
   const [stock, setStock] = useState('INFY');
@@ -8,6 +9,7 @@ const CustomAlertsPage = () => {
   const [year, setYear] = useState('');
 
   return (
+    <AuthCheck>
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
       <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">Custom Alerts & Goals</h1>
@@ -83,6 +85,8 @@ const CustomAlertsPage = () => {
         </div>
       </div>
     </div>
+    </AuthCheck>
+
   );
 };
 

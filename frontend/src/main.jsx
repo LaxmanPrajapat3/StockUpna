@@ -21,7 +21,7 @@ function Layout() {
 
   return (
     <>
-      {!hideNav2&&!hideNav && <NavBar />}
+      {!hideNav2&&!hideNav && <NavBar/>}
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/login' element={<LoginPage />} />
