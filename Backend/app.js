@@ -117,14 +117,14 @@ if(!isMatch){
 }
 
 // Generate token
-const token= jwt.sign({id:user.id}, JWT_SECRET,{expiresIn:'1h'});
+const token= jwt.sign({id:user.id}, JWT_SECRET,{expiresIn:'12h'});
 
 // Store token in http-only cokie
 res.cookie("token",token,{
     httpOnly:true,
     secure:false,  // ! IMP Remenber for  me in Producation set IT true with https
     sameSite:'lax',
-    maxAge:3600000 // 1 hour
+    maxAge:3600000*12 // 12 hour
 
 });
 res.status(200).json({message:"Login Successful", user:user.email});

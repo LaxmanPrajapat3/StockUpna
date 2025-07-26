@@ -1,10 +1,11 @@
 
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-
+import { AuthContext } from '../../authCheckfunction/AuthProvider';
 export default function LoginPage(){
+  const {setIsLoggedIn}=useContext(AuthContext);
   const navigater=useNavigate();
   const [formData,setFormData]=useState({email:"",password:""});
   const handleChange=(event)=>{
@@ -28,7 +29,7 @@ console.log("Login process:" , data);
 if(data.message =="Login Successful"){
   console.log("work ",data.message);
   // send user on home page 
-  
+  setIsLoggedIn(true);
 navigater('/');
 
 }
