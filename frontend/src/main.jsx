@@ -14,6 +14,8 @@ import ProtfolioLandingPage from './ProtfolioAnalyzerPage/ProtfrolioLandingPage/
  import LearningPage from './LearningPage/LearningPage.jsx';
  import CustomAlertsPage from './CustomAlertsPage.jsx/CustomAlertsPage.jsx';
  import PageNotFound from './PageNotFound.jsx';
+import { AuthProvider } from './authCheckfunction/AuthProvider.jsx';
+ 
 function Layout() {
   const location = useLocation();
   const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
@@ -44,6 +46,9 @@ function Layout() {
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+  <AuthProvider>
     <Layout />
+
+  </AuthProvider>
   </BrowserRouter>
 );

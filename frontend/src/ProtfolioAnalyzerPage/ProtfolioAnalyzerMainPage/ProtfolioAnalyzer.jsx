@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Gauge } from '@mui/x-charts/Gauge';
 import NavBar from '../ProtfrolioLandingPage/NavBar';
-import AuthCheck from '../../authCheckfunction/AuthCheck';
+import { AuthContext } from '../../authCheckfunction/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
+import App from '../../LoadingSpinner';
 const PortfolioAnalyzer = () => {
   const [totalInvestment, setTotalInvestment] = useState(15000);
   const [currentValue, setCurrentValue] = useState(17200);
@@ -45,12 +47,22 @@ useEffect(() => {
   setGaugeColor(getColorByRisk(riskLevel));
 }, [riskLevel]);
 
+const navigate=useNavigate();
 
+  const {isLoggedIn,loading}=useContext(AuthContext);
+useEffect(()=>{
+  if(!loading&&!isLoggedIn){
+    navigate('/login');
+  }
+},[isLoggedIn,navigate,loading])
 
+ if (loading) {
+  return <App/>
+}
 
   return (
   <>
-  <AuthCheck>
+ 
 
   
    <NavBar/>
@@ -166,8 +178,8 @@ useEffect(() => {
       </div>
     </div>
     
-    </AuthCheck>
-    </> 
+    </>
+
   );
 };
 

@@ -1,15 +1,27 @@
-import { useState } from 'react';
-import AuthCheck from '../authCheckfunction/AuthCheck';
-
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../authCheckfunction/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+import App from '../LoadingSpinner';
 const CustomAlertsPage = () => {
   const [stock, setStock] = useState('INFY');
   const [price, setPrice] = useState('');
   const [goal, setGoal] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+ const navigate=useNavigate();
+ 
+   const {isLoggedIn,loading}=useContext(AuthContext);
+ useEffect(()=>{
+   if(!loading&&!isLoggedIn){
+     navigate('/login');
+   }
+ },[isLoggedIn,navigate,loading])
+ if (loading) {
+  return <App/>
+}
 
   return (
-    <AuthCheck>
+    
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
       <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">Custom Alerts & Goals</h1>
@@ -85,7 +97,7 @@ const CustomAlertsPage = () => {
         </div>
       </div>
     </div>
-    </AuthCheck>
+    
 
   );
 };
