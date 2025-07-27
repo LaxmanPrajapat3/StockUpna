@@ -1,14 +1,11 @@
 import HomePage from './landingpage/Home/HomePage'
 import './App.css'
+import { useRef } from 'react'
 
-function App() {
+function App({scrollTargets}) {
   
 
-  return (
-    <>
-      <HomePage></HomePage>
-    </>
-  )
+  return (    <HomePage scrollTargets={scrollTargets}></HomePage>)
 }
 
 export default App

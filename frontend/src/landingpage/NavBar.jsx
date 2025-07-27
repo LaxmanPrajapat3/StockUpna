@@ -1,26 +1,30 @@
 import { useState ,useEffect} from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, SearchCheck, Section, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../authCheckfunction/AuthProvider";
 
 
-export default function Navbar() {
+export default function Navbar({scrollTargets}) {
   const auth=useContext(AuthContext);
   if(!auth) return null;
   const {isLoggedIn,setIsLoggedIn,checkAuth}=auth;
   const [isOpen, setIsOpen] = useState(false);
  
-
+const handleScroll = (section) => {
+    if (scrollTargets && scrollTargets[section]?.current) {
+      scrollTargets[section].current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   
 
   const navigater=useNavigate();
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "#" },
-    { name: "Features", href: "#" },
+    { name: "Home", action:()=>navigater('/')},
+    { name: "Features", action:()=>handleScroll("features")},
+    { name: "About", action:()=>handleScroll("about") },
   ];
 
   const  handleLoginbtn=()=>{
@@ -67,7 +71,7 @@ if(res.ok){
         {/* Desktop Nav */}
         <div className="hidden sm:flex justify-end items-center space-x-6">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="text-gray-700 hover:text-teal-600 font-medium">
+            <a key={link.name} onClick={link.action}className="text-gray-700 hover:text-teal-600 font-medium cursor-pointer">
               {link.name}
             </a>
           ))}
@@ -103,7 +107,7 @@ if(res.ok){
           >
             <div className="flex flex-col items-center space-y-4 py-4">
               {navLinks.map((link) => (
-                <a key={link.name} href={link.href} className="text-gray-700 font-medium">
+                <a key={link.name} onClick={link.action} className="text-gray-700 font-medium">
                   {link.name}
                 </a>
               ))}

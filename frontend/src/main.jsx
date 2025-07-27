@@ -21,11 +21,16 @@ function Layout() {
   const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
   const hideNav2=location.pathname ==='/protfolio/protfolioAnlyze';  
 
+  const scrollTargets={
+    features:null,
+    about:null,
+  }
+
   return (
     <>
-      {!hideNav2&&!hideNav && <NavBar/>}
+      {!hideNav2&&!hideNav && <NavBar  scrollTargets={scrollTargets}/>}
       <Routes>
-        <Route path='/' element={<App />} />
+        <Route path='/' element={<App scrollTargets={scrollTargets}/>} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/protfolio' element={<ProtfolioLandingPage />} />
