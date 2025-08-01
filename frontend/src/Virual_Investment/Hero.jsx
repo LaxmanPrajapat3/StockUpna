@@ -4,10 +4,10 @@ import { useState } from "react";
 
 export default function Hero(){
       const [balance, setBalance] = useState(100000);
-      const [holdings, setHoldings] = useState(85750);
-      const [profitLoss, setProfitLoss] = useState(5250);
-      const [investment, setInvestment] = useState(80500);
-      const [leaderboardRank] = useState(7);
+      const [holdings, setHoldings] = useState(0);
+      const [profitLoss, setProfitLoss] = useState(0);
+      const [investment, setInvestment] = useState(0);
+      const [leaderboardRank] = useState(50000);
       const [searchTerm, setSearchTerm] = useState('');
       const [selectedStock, setSelectedStock] = useState(null);
       const [quantity, setQuantity] = useState(1);
@@ -50,10 +50,10 @@ export default function Hero(){
       };
     
     return (
-    <div className="p-6 max-w-4xl mx-auto grid gap-6">
+    <div className="p-6 max-w-4xl mx-auto grid gap-6 mt-25 mb-10">
       <h1 className="text-3xl font-bold text-center">Virtual Trading</h1>
       <p className="text-center text-gray-600 text-lg">Available Balance</p>
-      <p className="text-center text-4xl font-semibold text-black">${balance.toLocaleString()}</p>
+      <p className="text-center text-4xl font-semibold text-black">{balance.toLocaleString()}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <BalanceCard label="Current Holdings" value={`₹${holdings.toLocaleString()}`} />

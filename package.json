@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "cookie-parser": "^1.4.7",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "yahoo-finance2": "^2.13.3"
   }
 }

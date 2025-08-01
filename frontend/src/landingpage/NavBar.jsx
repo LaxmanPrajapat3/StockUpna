@@ -107,7 +107,7 @@ if(res.ok){
           >
             <div className="flex flex-col items-center space-y-4 py-4">
               {navLinks.map((link) => (
-                <a key={link.name} onClick={link.action} className="text-gray-700 font-medium">
+                <a key={link.name} onClick={link.action} className="text-gray-700 font-medium cursor-pointer">
                   {link.name}
                 </a>
               ))}

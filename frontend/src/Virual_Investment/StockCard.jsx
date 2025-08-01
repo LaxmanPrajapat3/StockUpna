@@ -1,11 +1,11 @@
 function StockCard  ({ symbol, name, price, change, quantity, onQuantityChange, onBuy, onSell }) { 
   return (
-  <div className="flex flex-col gap-4">
+  <div className="flex flex-col gap-4 ">
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div className="flex flex-col md:flex-row md:items-center gap-2">
         <p className="font-bold text-lg">{symbol}</p>
         <p className="text-gray-700">{name}</p>
-        <p className="text-black">${price.toFixed(2)}</p>
+        <p className="text-black">₹{price.toFixed(2)}</p>
         <p className={`font-medium ${change >= 0 ? 'text-green-600' : 'text-red-500'}`}>{change >= 0 ? `+${change}%` : `${change}%`}</p>
       </div>
       <div className="flex items-center gap-2">

@@ -18,6 +18,8 @@ app.use(cors(
 // middlewars 
 app.use(express.json()); // add this at top
 app.use(cookieParser());
+// app.use('/api',router);
+
 
 function authenticateToken(req,res,next){
     const token=req.cookies.token;
