@@ -7,6 +7,8 @@ const app = express();
 const bcrypt = require('bcrypt');
 const jwt=require('jsonwebtoken');
 const cookieParser=require('cookie-parser');
+const { default: yahooFinance } = require('yahoo-finance2');
+const { default: axios } = require('axios');
 
 const JWT_SECRET=process.env.Secret_Key
 app.use(cors(
@@ -147,4 +149,39 @@ app.post("/logout",(req,res)=>{
 
 app.get("/verify", authenticateToken, (req, res) => {
     res.status(200).json({ message: "Authenticated" });
+});
+
+app.get('/api/price/:symbol',async(req,res)=>{
+    try{
+        const {symbol}=req.params; //ex "AAPL" or "TCS.NS"
+    const apikey=process.env.TWELVE_DATA_API_KEY;
+    const response=await axios.get(`https://api.twelvedata.com/quote`,{
+        params:{
+            symbol:symbol,
+            apikey:apikey,
+        },
+    });
+if(response.data.code){
+    // api error (ex -- invalid symbol)
+    return res.status(400).json({error:response.data.message});
+}
+
+res.json({
+      symbol: response.data.symbol,
+      price: parseFloat(response.data.close),
+      change: parseFloat(response.data.change),
+      percentChange: parseFloat(response.data.percent_change),
+      open: parseFloat(response.data.open),
+      high: parseFloat(response.data.high),
+      low: parseFloat(response.data.low),
+      volume: parseInt(response.data.volume),
+      currency: response.data.currency
+    });
+
+
+        
+    }catch(err){
+        console.error('TwelveData Error :',err.message);
+        res.status(500).json({err :"Faied to fetch stock price"});
+    }
 });
