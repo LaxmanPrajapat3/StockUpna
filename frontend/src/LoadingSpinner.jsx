@@ -19,7 +19,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Hide spinner after 3 seconds
+    }, 3000*60); // Hide spinner after 3 seconds
 
     // Cleanup the timer if the component unmounts
     return () => clearTimeout(timer);

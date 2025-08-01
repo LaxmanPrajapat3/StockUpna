@@ -1,11 +1,11 @@
-
+//one Dollar = rs  87.454
 
 import BalanceCard from "./BalanceCard";
 import StockCard from "./StockCard";
 import { useState } from "react";
 
 export default function Hero() {
-  const [balance, setBalance] = useState(100000);
+  const [balance, setBalance] = useState(200000);
   const [holdings, setHoldings] = useState(0);
   const [profitLoss, setProfitLoss] = useState(0);
   const [investment, setInvestment] = useState(0);
@@ -16,61 +16,62 @@ export default function Hero() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-const stockList = [
-  // 🔷 Indian Companies (NSE Symbols)
-  { symbol: 'RELIANCE.NS', name: 'Reliance Industries' },
-  { symbol: 'TCS.NS', name: 'Tata Consultancy Services' },
-  { symbol: 'INFY.NS', name: 'Infosys Ltd' },
-  { symbol: 'HDFCBANK.NS', name: 'HDFC Bank' },
-  { symbol: 'ICICIBANK.NS', name: 'ICICI Bank' },
-  { symbol: 'SBIN.NS', name: 'State Bank of India' },
-  { symbol: 'WIPRO.NS', name: 'Wipro Ltd' },
-  { symbol: 'HINDUNILVR.NS', name: 'Hindustan Unilever' },
-  { symbol: 'ITC.NS', name: 'ITC Ltd' },
-  { symbol: 'LT.NS', name: 'Larsen & Toubro' },
-  { symbol: 'AXISBANK.NS', name: 'Axis Bank' },
-  { symbol: 'KOTAKBANK.NS', name: 'Kotak Mahindra Bank' },
-  { symbol: 'MARUTI.NS', name: 'Maruti Suzuki' },
-  { symbol: 'BAJFINANCE.NS', name: 'Bajaj Finance' },
-  { symbol: 'ADANIENT.NS', name: 'Adani Enterprises' },
-  { symbol: 'ADANIGREEN.NS', name: 'Adani Green Energy' },
-  { symbol: 'ADANIPORTS.NS', name: 'Adani Ports' },
-  { symbol: 'HCLTECH.NS', name: 'HCL Technologies' },
-  { symbol: 'POWERGRID.NS', name: 'Power Grid Corp' },
-  { symbol: 'NTPC.NS', name: 'NTPC Ltd' },
-  { symbol: 'TITAN.NS', name: 'Titan Company' },
-  { symbol: 'ASIANPAINT.NS', name: 'Asian Paints' },
-  { symbol: 'BHARTIARTL.NS', name: 'Bharti Airtel' },
-  { symbol: 'DMART.NS', name: 'Avenue Supermarts (DMart)' },
-  { symbol: 'ULTRACEMCO.NS', name: 'UltraTech Cement' },
-  { symbol: 'JSWSTEEL.NS', name: 'JSW Steel' },
-  { symbol: 'ONGC.NS', name: 'ONGC Ltd' },
-  { symbol: 'COALINDIA.NS', name: 'Coal India' },
-  { symbol: 'SUNPHARMA.NS', name: 'Sun Pharma' },
-  { symbol: 'BAJAJ_AUTO.NS', name: 'Bajaj Auto' },
 
-  // 🌐 International Companies
+ 
+
+  const stockList = [
   { symbol: 'AAPL', name: 'Apple Inc.' },
   { symbol: 'MSFT', name: 'Microsoft Corporation' },
-  { symbol: 'GOOGL', name: 'Alphabet Inc.' },
-  { symbol: 'TSLA', name: 'Tesla Inc.' },
+  { symbol: 'GOOGL', name: 'Alphabet Inc. (Class A)' },
+  { symbol: 'GOOG', name: 'Alphabet Inc. (Class C)' },
   { symbol: 'AMZN', name: 'Amazon.com Inc.' },
   { symbol: 'META', name: 'Meta Platforms Inc.' },
+  { symbol: 'TSLA', name: 'Tesla Inc.' },
   { symbol: 'NVDA', name: 'NVIDIA Corporation' },
   { symbol: 'NFLX', name: 'Netflix Inc.' },
-  { symbol: 'BABA', name: 'Alibaba Group' },
-  { symbol: 'ORCL', name: 'Oracle Corporation' },
   { symbol: 'INTC', name: 'Intel Corporation' },
-  { symbol: 'IBM', name: 'IBM Corporation' },
+  { symbol: 'ORCL', name: 'Oracle Corporation' },
+  { symbol: 'IBM', name: 'International Business Machines' },
   { symbol: 'PEP', name: 'PepsiCo Inc.' },
-  { symbol: 'KO', name: 'Coca-Cola Co' },
+  { symbol: 'KO', name: 'The Coca-Cola Company' },
   { symbol: 'WMT', name: 'Walmart Inc.' },
   { symbol: 'PFE', name: 'Pfizer Inc.' },
   { symbol: 'JNJ', name: 'Johnson & Johnson' },
-  { symbol: 'XOM', name: 'Exxon Mobil Corp.' },
+  { symbol: 'XOM', name: 'Exxon Mobil Corporation' },
   { symbol: 'CVX', name: 'Chevron Corporation' },
-  { symbol: 'DIS', name: 'Walt Disney Co' }
+  { symbol: 'DIS', name: 'The Walt Disney Company' },
+  { symbol: 'CSCO', name: 'Cisco Systems Inc.' },
+  { symbol: 'CRM', name: 'Salesforce Inc.' },
+  { symbol: 'BMY', name: 'Bristol-Myers Squibb Company' },
+  { symbol: 'ABT', name: 'Abbott Laboratories' },
+  { symbol: 'MRK', name: 'Merck & Co., Inc.' },
+  { symbol: 'MCD', name: 'McDonald’s Corporation' },
+  { symbol: 'NKE', name: 'Nike Inc.' },
+  { symbol: 'BA', name: 'The Boeing Company' },
+  { symbol: 'VZ', name: 'Verizon Communications Inc.' },
+  { symbol: 'T', name: 'AT&T Inc.' },
+  { symbol: 'WBA', name: 'Walgreens Boots Alliance Inc.' },
+  { symbol: 'C', name: 'Citigroup Inc.' },
+  { symbol: 'BAC', name: 'Bank of America Corporation' },
+  { symbol: 'JPM', name: 'JPMorgan Chase & Co.' },
+  { symbol: 'GS', name: 'The Goldman Sachs Group Inc.' },
+  { symbol: 'AXP', name: 'American Express Company' },
+  { symbol: 'PYPL', name: 'PayPal Holdings Inc.' },
+  { symbol: 'ADBE', name: 'Adobe Inc.' },
+  { symbol: 'AMD', name: 'Advanced Micro Devices Inc.' },
+  { symbol: 'QCOM', name: 'QUALCOMM Inc.' },
+  { symbol: 'SPGI', name: 'S&P Global Inc.' },
+  { symbol: 'BLK', name: 'BlackRock Inc.' },
+  { symbol: 'UPS', name: 'United Parcel Service Inc.' },
+  { symbol: 'FDX', name: 'FedEx Corporation' },
+  { symbol: 'EBAY', name: 'eBay Inc.' },
+  { symbol: 'LYFT', name: 'Lyft Inc.' },
+  { symbol: 'UBER', name: 'Uber Technologies Inc.' },
+  { symbol: 'SHOP', name: 'Shopify Inc.' },
+  { symbol: 'SNOW', name: 'Snowflake Inc.' }
 ];
+
+
 
 
   const filteredStocks = stockList.filter(
@@ -88,7 +89,8 @@ const stockList = [
       console.log(data);
       setSelectedStock({
         ...stock,
-        price: data.price,
+        // converted price  in rs
+        price: data.price*87.454,
         change: data.percentChange,
       });
     } catch (err) {
@@ -125,7 +127,9 @@ const stockList = [
 
   return (
     <div className="p-6 max-w-4xl mx-auto grid gap-6 mt-25 mb-10">
+
       <h1 className="text-3xl font-bold text-center">Virtual Trading</h1>
+      
       <p className="text-center text-gray-600 text-lg">Available Balance</p>
       <p className="text-center text-4xl font-semibold text-black">{balance.toLocaleString()}</p>
 
@@ -170,6 +174,7 @@ const stockList = [
             </div>)):filteredStocks.slice(0,7).map(stock =>(
           <div key={stock.symbol}
           className={`p-2 border rounded cursor-pointer ${selectedStock?.symbol === stock.symbol ? 'bg-green-100' : ''}`}
+          onClick={() => handleStockClick(stock)}
           > 
           {stock.symbol}  -{stock.name}
           
@@ -198,4 +203,5 @@ const stockList = [
       )}
     </div>
   );
+  
 }
