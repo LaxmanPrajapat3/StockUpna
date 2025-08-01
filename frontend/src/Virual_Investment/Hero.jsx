@@ -151,7 +151,7 @@ const stockList = [
         </div>
 
         <div className="grid gap-2">
-          {filteredStocks.map(stock => (
+          {/* {filteredStocks.map(stock => (
             <div
               key={stock.symbol}
               className={`p-2 border rounded cursor-pointer ${selectedStock?.symbol === stock.symbol ? 'bg-green-100' : ''}`}
@@ -159,7 +159,23 @@ const stockList = [
             >
               {stock.symbol} - {stock.name}
             </div>
+          ))} */}
+          {searchTerm ?filteredStocks.map(stock => (
+            <div
+              key={stock.symbol}
+              className={`p-2 border rounded cursor-pointer ${selectedStock?.symbol === stock.symbol ? 'bg-green-100' : ''}`}
+              onClick={() => handleStockClick(stock)}
+            >
+              {stock.symbol} - {stock.name}
+            </div>)):filteredStocks.slice(0,7).map(stock =>(
+          <div key={stock.symbol}
+          className={`p-2 border rounded cursor-pointer ${selectedStock?.symbol === stock.symbol ? 'bg-green-100' : ''}`}
+          > 
+          {stock.symbol}  -{stock.name}
+          
+          </div>
           ))}
+
         </div>
       </div>
 
