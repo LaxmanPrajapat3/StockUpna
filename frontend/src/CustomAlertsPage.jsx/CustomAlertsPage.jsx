@@ -2,29 +2,69 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../authCheckfunction/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import App from '../LoadingSpinner';
+import axios from 'axios';
+
 const CustomAlertsPage = () => {
   const [stock, setStock] = useState('INFY');
   const [price, setPrice] = useState('');
   const [goal, setGoal] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
- const navigate=useNavigate();
- 
-   const {isLoggedIn,loading}=useContext(AuthContext);
- useEffect(()=>{
-   if(!loading&&!isLoggedIn){
-     navigate('/login');
-   }
- },[isLoggedIn,navigate,loading])
- if (loading) {
-  return <App/>
-}
+  const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
+  const { isLoggedIn, loading, user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!loading && !isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate, loading]);
+
+  if (loading) return <App />;
+
+  const handleSetAlert = async () => {
+    if (!price) return setMessage('⚠️ Price is required.');
+    try {
+      const res = await axios.post('http://localhost:8000/user/custom-alert', {
+       
+        stock,
+        price: parseFloat(price)
+      },{withCredentials:true});
+      setMessage('✅ Alert set successfully!');
+      setPrice('');
+    } catch (error) {
+      console.error(error);
+      setMessage('❌ Failed to set alert.');
+    }
+  };
+
+  const handleSaveGoal = async () => {
+    if (!goal || !month || !year) return setMessage('⚠️ All fields are required.');
+    try {
+      const res = await axios.post('http://localhost:8000/user/goals', {
+       
+        goal,
+        month,
+        year
+      },{withCredentials:true
+      });
+      setGoal('');
+      setMonth('');
+      setYear('');
+     setMessage('✅ Goal saved successfully!');
+    } catch (error) {
+      console.error(error);
+      setMessage('❌ Failed to save goal.');
+    }
+  };
 
   return (
-    
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8 mt-20">
       <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">Custom Alerts & Goals</h1>
+
+        {message && <p className="text-sm text-center mb-4 text-emerald-700">{message}</p>}
 
         {/* Stock Alert */}
         <div className="mb-6">
@@ -41,16 +81,19 @@ const CustomAlertsPage = () => {
             <option>HDFC</option>
           </select>
 
-          <label className="block text-sm font-medium mb-1">Alert me if</label>
+          <label className="block text-sm font-medium mb-1">Alert me if price crosses</label>
           <input
-            type="text"
+            type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder="₹ 1,500"
+            placeholder="₹ 1500"
             className="w-full border rounded-md p-2 mb-3"
           />
 
-          <button className="w-full bg-emerald-600 text-white py-2 rounded hover:bg-emerald-700 transition">
+          <button
+            onClick={handleSetAlert}
+            className="w-full bg-emerald-600 text-white py-2 rounded hover:bg-emerald-700 transition"
+          >
             Set Alert
           </button>
         </div>
@@ -58,7 +101,6 @@ const CustomAlertsPage = () => {
         {/* Investment Goal */}
         <div>
           <h2 className="text-lg font-semibold mb-2">Investment Goal</h2>
-
           <label className="block text-sm font-medium mb-1">Goal</label>
           <input
             type="text"
@@ -72,17 +114,20 @@ const CustomAlertsPage = () => {
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Target Month</label>
               <input
-                type="text"
+                type="number"
+                min="1"
+                max="12"
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
-                placeholder="October"
+                placeholder="1"
+                
                 className="w-full border rounded-md p-2"
               />
             </div>
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Target Year</label>
               <input
-                type="text"
+                type="number"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
                 placeholder="2025"
@@ -91,14 +136,15 @@ const CustomAlertsPage = () => {
             </div>
           </div>
 
-          <button className="w-full bg-emerald-600 text-white py-2 rounded hover:bg-emerald-700 transition">
+          <button
+            onClick={handleSaveGoal}
+            className="w-full bg-emerald-600 text-white py-2 rounded hover:bg-emerald-700 transition"
+          >
             Save Goal
           </button>
         </div>
       </div>
     </div>
-    
-
   );
 };
 

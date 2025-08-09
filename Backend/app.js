@@ -7,7 +7,7 @@ const app = express();
 const bcrypt = require('bcrypt');
 const jwt=require('jsonwebtoken');
 const cookieParser=require('cookie-parser');
-const { default: yahooFinance } = require('yahoo-finance2');
+
 const { default: axios } = require('axios');
 
 const JWT_SECRET=process.env.Secret_Key
@@ -34,6 +34,7 @@ function authenticateToken(req,res,next){
             
         }
         req.user=user;
+        
             next();
     })
 }
@@ -147,9 +148,16 @@ app.post("/logout",(req,res)=>{
     res.status(200).json({message: "Logged out"});
 });
 
-app.get("/verify", authenticateToken, (req, res) => {
+// for verfiy user is loggedin or not 
+
+app.get("/verify",authenticateToken,async(req,res) => {
+    
+
+
     res.status(200).json({ message: "Authenticated" });
 });
+
+// to get stocks live infor
 
 app.get('/api/price/:symbol',async(req,res)=>{
     try{
@@ -184,4 +192,102 @@ res.json({
         console.error('TwelveData Error :',err.message);
         res.status(500).json({err :"Faied to fetch stock price"});
     }
-});
+
+
+})
+
+
+const AlertSchema=new mongoose.Schema({
+        price:{
+            type:Number,
+            required:true,
+        },
+        stock:{
+            type:String,
+            required:true
+        }
+        ,
+        userId:{
+type:String,
+required:true,
+        }
+    })
+
+
+
+
+// to set custom-alerts
+    app.post('/user/custom-alert',authenticateToken,async(req,res)=>{
+        const {price,stock}=req.body;
+        console.log("It route is working");
+  console.log("User ID from token:", req.user.id);
+
+try{
+   const CustomAlerts= mongoose.model("CustomAlerts",AlertSchema);
+ const newCustomAlert=  new CustomAlerts({
+    price:price,
+    stock:stock,
+userId:req.user.id,
+   })
+  await newCustomAlert.save();
+
+  return res.status(200).json({
+            message:"Custom alert is seted",
+           
+        });
+
+
+}catch(error){
+ console.error(error);
+        if (!res.headersSent) {
+            res.status(500).json({ message: "Something went wrong" });
+        }
+}
+
+
+        
+    })
+    // create an schma for store data of invesment goal
+const InvesmentGoalSchema=mongoose.Schema({
+    goal:{
+        type:String,
+        required:true
+    },
+    month:{
+        type:Number,
+        required:true,
+    },
+    year:{
+type:Number,
+required:true
+    },
+    userId:{
+type:String,
+required:true,
+    }
+  });
+
+  //  To Set Investment Goals route
+  app.post("/user/goals",authenticateToken,async(req,res)=>{
+    try{
+const {goal,month,year}=req.body;
+console.log(goal,month,year);
+const InvestmentGoal=mongoose.model("InvestmentGoal",InvesmentGoalSchema);
+const newInvestGoal=new InvestmentGoal({
+    goal:goal,
+    month:month,
+    year:year,
+    userId:req.user.id,
+})
+const data=await newInvestGoal.save();
+console.log(data);
+return res.status(201).json({message:"Custom Goals is set"},) 
+    }catch(error){
+        console.log(error);
+        if (!res.headersSent) {
+            res.status(500).json({ message: "Something went wrong" });
+        }
+    }
+
+
+  })
