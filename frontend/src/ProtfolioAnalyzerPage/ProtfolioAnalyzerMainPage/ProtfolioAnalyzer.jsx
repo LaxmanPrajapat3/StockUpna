@@ -1,7 +1,7 @@
 import React, { useState, useEffect ,useContext} from 'react';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Gauge } from '@mui/x-charts/Gauge';
-import NavBar from '../ProtfrolioLandingPage/NavBar';
+
 import { AuthContext } from '../../authCheckfunction/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -65,8 +65,8 @@ useEffect(()=>{
  
 
   
-   <NavBar/>
-    <div className="container mx-auto  bg-white rounded-lg shadow-lg mt-25 mb-20 ">
+   
+    <div className="container mx-auto  bg-white rounded-lg shadow-lg mt-50 mb-20 ">
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Portfolio Analyzer</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-gray-50 p-4 rounded-lg">

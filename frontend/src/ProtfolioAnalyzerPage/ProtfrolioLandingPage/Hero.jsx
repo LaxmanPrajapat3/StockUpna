@@ -8,7 +8,7 @@ console.log("button is click on 1");
 navigater('/protfolio/protfolioAnlyze');
       }
       return (
-        <div className="text-center py-16">
+        <div className="text-center py-16 pb-65 pt-45">
           <h1 className="text-5xl font-bold mb-4">Portfolio Analyzer</h1>
           <p className="text-lg mb-8">
             Gain valuable insights into the health and performance of your investment portfolio.

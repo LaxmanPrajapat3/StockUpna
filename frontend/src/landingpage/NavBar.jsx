@@ -22,7 +22,7 @@ const handleScroll = (section) => {
 
   const navigater=useNavigate();
   const navLinks = [
-    { name: "Home", action:()=>navigater('/')},
+    
     { name: "Features", action:()=>handleScroll("features")},
     { name: "About", action:()=>handleScroll("about") },
   ];
@@ -63,10 +63,13 @@ if(res.ok){
       <div className="max-w-6xl mx-auto   grid grid-cols-2 sm:grid-cols-2 items-center">
         
         {/* Left: Logo + Brand */}
+        <a href="/">
+        
         <div className="flex items-center gap-2">
           <img src="../src/assets/MainLogo.png" alt="Logo" className="h-26 w-26" />
-          
         </div>
+        </a>
+          
 
         {/* Desktop Nav */}
         <div className="hidden sm:flex justify-end items-center space-x-6">

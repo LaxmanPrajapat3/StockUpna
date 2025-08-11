@@ -1,4 +1,4 @@
- import NavBar from "./NavBar";
+
  import Hero from "./Hero";
  import FeatureSection from './FeatureSection'
 import {AuthProvider} from "../../authCheckfunction/AuthProvider";
@@ -21,9 +21,9 @@ useEffect(()=>{
       
       return (
         <AuthProvider>
-        <div className="min-h-screen bg-gray-50">
-          <NavBar></NavBar>
-          <Hero></Hero>
+        <div className="min-h-screen bg-gray-50 mt-40 mb-20">
+       
+          <Hero ></Hero>
           <FeatureSection></FeatureSection>
         </div> 
         

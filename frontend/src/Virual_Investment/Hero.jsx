@@ -2,9 +2,27 @@
 
 import BalanceCard from "./BalanceCard";
 import StockCard from "./StockCard";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "axios";
+
 
 export default function Hero() {
+  const getData=async()=>{
+try{
+
+const response=await  fetch('http://localhost:8000/user/getInvestmentdata',{credentials:'include'});
+const data =await response.json();
+if(!data)return null;
+console.log(data.balance);
+
+return data;
+}catch(error){
+  console.error('There was a problem with the fetch operation:',error);
+  return null;
+}
+  }
+
+
   const [balance, setBalance] = useState(200000);
   const [holdings, setHoldings] = useState(0);
   const [profitLoss, setProfitLoss] = useState(0);
@@ -15,8 +33,21 @@ export default function Hero() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message,setMessage]=useState();
 
+useEffect(()=>{
+  const  fetchData=async()=>{
+    const data= await getData();
+    if(data){
+      setBalance(data.balance || 200000);
+      setHoldings(data.holdings ||0);
+      setProfitLoss(data.profitLoss || 0);
+      setInvestment(data.investment || 0);
+    }
 
+  }
+  fetchData();
+},[])  // this empty array ensures this effect runs only once after the initial render
  
 
   const stockList = [
@@ -80,7 +111,7 @@ export default function Hero() {
   );
 
   const handleStockClick = async (stock) => {
-    // prompt("Hello");
+    
     setLoading(true);
     setError(null);
     try {
@@ -101,17 +132,40 @@ export default function Hero() {
     setLoading(false);
   };
 
-  const handleBuy = () => {
+
+
+const handleBuy = () => {
     if (selectedStock) {
-      const totalCost = selectedStock.price * quantity;
-      if (balance >= totalCost) {
-        setBalance(prev => prev - totalCost);
-        setInvestment(prev => prev + totalCost);
-        setHoldings(prev => prev + totalCost);
-        setProfitLoss(prev => prev + (totalCost * selectedStock.change / 100));
+        const totalCost = selectedStock.price * quantity;
+        if (balance >= totalCost) {
+            setBalance(prev => prev - totalCost);
+            setInvestment(prev => prev + totalCost);
+            setHoldings(prev => prev + totalCost);
+            setProfitLoss(prev => prev + (totalCost * selectedStock.change / 100));
+        }
+    }
+};
+
+// Use useEffect to watch for changes in the relevant state variables
+useEffect(() => {
+    // This code will run whenever balance, investment, holdings, or profitLoss change
+    const sendInvestmentData=async()=>{
+      try{
+const response=   axios.post('http://localhost:8000/user/investmentInfo', {
+        balance: balance,
+        investment: investment,
+        holdings: holdings,
+        profitLoss: profitLoss,
+    },{withCredentials:true});
+  
+    console.log(response.data.message);
+      } catch(error){
+        console.error("Error sending investemnet data: ");
       }
     }
-  };
+    sendInvestmentData();
+ 
+}, [balance, investment, holdings, profitLoss]); // The dependency array
 
   const handleSell = () => {
     if (selectedStock) {
@@ -127,7 +181,7 @@ export default function Hero() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto grid gap-6 mt-25 mb-10">
-
+{<p>message</p>&&message}
       <h1 className="text-3xl font-bold text-center">Virtual Trading</h1>
       
       <p className="text-center text-gray-600 text-lg">Available Balance</p>

@@ -280,7 +280,7 @@ const newInvestGoal=new InvestmentGoal({
     userId:req.user.id,
 })
 const data=await newInvestGoal.save();
-console.log(data);
+
 return res.status(201).json({message:"Custom Goals is set"},) 
     }catch(error){
         console.log(error);
@@ -291,3 +291,78 @@ return res.status(201).json({message:"Custom Goals is set"},)
 
 
   })
+// Define schema
+const userInvestSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  balance: { type: Number, required: true },
+  holdings: { type: Number, required: true },
+  profitLoss: { type: Number, required: true },
+  investment: { type: Number, required: true }
+});
+
+// Define model outside routes
+const UserInvestInfo = mongoose.model("UserInvestInfo", userInvestSchema);
+
+// Route
+app.post("/user/investmentInfo", authenticateToken, async (req, res) => {
+ 
+
+  const { balance, investment, holdings, profitLoss } = req.body;
+  
+// Validation
+
+
+  if ([balance, investment, holdings, profitLoss].some(v => v == null)) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  
+  try {
+      const isUserExist=await UserInvestInfo.findOne({userId:req.user.id})  
+   
+
+ if(!isUserExist){
+
+    const newInvestment = new UserInvestInfo({
+      userId: req.user.id,
+      balance,
+      holdings,
+      profitLoss,
+      investment
+    });
+
+    const data = await newInvestment.save();
+  
+    console.log("First investemnet for this user",data);
+
+
+
+   
+
+
+ }else{
+
+
+
+const updateedInfo=await UserInvestInfo.findOneAndUpdate({userId:req.user.id},{balance:balance,
+      holdings:holdings,
+      profitLoss:profitLoss,
+      investment:investment},{new:true});
+     
+      
+    }
+    
+    return res.status(200).json({ message: "Successfully Invested" });
+ 
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error saving investment" ,err});
+  }
+}); 
+
+app.get("/user/getInvestmentdata", authenticateToken,async(req,res)=>{
+    console.log("this is working",req.user.id);
+const data=  await  UserInvestInfo.findOne({userId:req.user.id});
+console.log(data);
+res.send(data);
+})

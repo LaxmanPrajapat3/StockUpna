@@ -18,8 +18,7 @@ import { AuthProvider } from './authCheckfunction/AuthProvider.jsx';
  
 function Layout() {
   const location = useLocation();
-  const hideNav = location.pathname === '/protfolio'; // condition to hide NavBar
-  const hideNav2=location.pathname ==='/protfolio/protfolioAnlyze';  
+ 
 
   const scrollTargets={
     features:null,
@@ -28,7 +27,7 @@ function Layout() {
 
   return (
     <>
-      {!hideNav2&&!hideNav && <NavBar  scrollTargets={scrollTargets}/>}
+      {<NavBar  scrollTargets={scrollTargets}/>}
       <Routes>
         <Route path='/' element={<App scrollTargets={scrollTargets}/>} />
         <Route path='/login' element={<LoginPage />} />
