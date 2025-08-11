@@ -25,7 +25,7 @@ const [balance,setbalance]=useState(200000);
   const [totalInvestment, setTotalInvestment] = useState(0);
   const [currentValue, setCurrentValue] = useState(0);
   const [profitLoss, setProfitLoss] = useState(0);
-  const [riskLevel, setRiskLevel] = useState(50);
+  const [riskLevel, setRiskLevel] = useState(10);
 
   
   useEffect(()=>{
@@ -43,7 +43,7 @@ const [balance,setbalance]=useState(200000);
   },[])  // this empty array ensures this effect runs only once after the initial render
 
   const sectorData = [
-    { id: 0, value: 40, label: 'Technology', color: '#10B981' },
+    { id: 0, value: 10, label: 'Technology', color: '#10B981' },
     { id: 1, value: 20, label: 'Finance', color: '#34D399' },
     { id: 2, value: 15, label: 'Healthcare', color: '#6EE7B7' },
     { id: 3, value: 15, label: 'Other', color: '#A7F3D0' },
@@ -55,15 +55,53 @@ const [balance,setbalance]=useState(200000);
     { id: 2, value: 20, label: 'Bonds', color: '#6EE7B7' },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTotalInvestment(prev => prev + Math.floor(Math.random() * 100) - 50);
-      setCurrentValue(prev => prev + Math.floor(Math.random() * 200) - 100);
-      setProfitLoss(currentValue - totalInvestment);
-      setRiskLevel(prev => Math.min(100, Math.max(0, prev + Math.floor(Math.random() * 10) - 5)));
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [currentValue, totalInvestment]);
+  
+
+//   useEffect(() => {
+//   const interval = setInterval(() => {
+//     // Change only currentValue by ±0.5%
+//     setCurrentValue(prev => {
+//       const change = prev * (Math.random() * 0.01 - 0.005); // -0.5% to +0.5%
+//       return +(prev + change).toFixed(2);
+//     });
+
+//     // Keep totalInvestment stable unless needed
+//     setTotalInvestment(prev => +(prev).toFixed(2));
+
+//     // Calculate profit/loss from latest values
+//     setProfitLoss(cv => +(cv - totalInvestment).toFixed(2));
+
+//     // Smooth risk changes
+//     setRiskLevel(prev =>
+//       Math.min(100, Math.max(0, prev + (Math.random() * 4 - 2))) // -2 to +2 risk change
+//     );
+//   }, 1000); // update every second
+
+//   return () => clearInterval(interval);
+// }, [totalInvestment]);
+useEffect(() => {
+  let startingValue = currentValue; // from API once
+  let investmentValue = totalInvestment; // from API once
+
+  const interval = setInterval(() => {
+    // Simulate ±0.5% change from current value
+    startingValue = +(startingValue * (1 + (Math.random() - 0.5) / 100)).toFixed(2);
+
+    // Update state with new simulated value
+    setCurrentValue(startingValue);
+
+    // Recalculate profit/loss using fixed investment
+    setProfitLoss(+(startingValue - investmentValue).toFixed(2));
+
+    // Smooth risk change
+    setRiskLevel(prev =>
+      Math.min(100, Math.max(0, prev + (Math.random() * 4 - 2)))
+    );
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [currentValue, totalInvestment]); // currentValue & totalInvestment set from API once
+
 
   const getColorByRisk = (level) => {
     if (level < 33) return '#10B981';   // Green
