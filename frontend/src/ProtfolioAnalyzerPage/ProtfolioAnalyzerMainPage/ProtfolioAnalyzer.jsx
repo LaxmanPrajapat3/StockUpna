@@ -7,10 +7,40 @@ import { useNavigate } from 'react-router-dom';
 
 import App from '../../LoadingSpinner';
 const PortfolioAnalyzer = () => {
-  const [totalInvestment, setTotalInvestment] = useState(15000);
-  const [currentValue, setCurrentValue] = useState(17200);
-  const [profitLoss, setProfitLoss] = useState(2200);
+  const getData=async()=>{
+try{
+
+const response=await  fetch('http://localhost:8000/user/getInvestmentdata',{credentials:'include'});
+const data =await response.json();
+if(!data)return null;
+console.log(data.balance);
+
+return data;
+}catch(error){
+  console.error('There was a problem with the fetch operation:',error);
+  return null;
+}
+  }
+const [balance,setbalance]=useState(200000);
+  const [totalInvestment, setTotalInvestment] = useState(0);
+  const [currentValue, setCurrentValue] = useState(0);
+  const [profitLoss, setProfitLoss] = useState(0);
   const [riskLevel, setRiskLevel] = useState(50);
+
+  
+  useEffect(()=>{
+    const  fetchData=async()=>{
+      const data= await getData();
+      if(data){
+        setbalance(data.balance ||0);
+        setCurrentValue(data.holdings || 200000);
+        setProfitLoss(data.profitLoss || 0);
+        setTotalInvestment(data.investment || 0);
+      }
+  
+    }
+    fetchData();
+  },[])  // this empty array ensures this effect runs only once after the initial render
 
   const sectorData = [
     { id: 0, value: 40, label: 'Technology', color: '#10B981' },
@@ -70,13 +100,17 @@ useEffect(()=>{
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Portfolio Analyzer</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-gray-50 p-4 rounded-lg">
+          <p className="text-lg font-semibold text-gray-700">Total Balance</p>
+           
+           <p className="text-2xl text-teal-600">{balance.toLocaleString()}</p>
           <p className="text-lg font-semibold text-gray-700">Total Investment</p>
-          <p className="text-2xl text-teal-600">${totalInvestment.toLocaleString()}</p>
+
+          <p className="text-2xl text-teal-600">{totalInvestment.toLocaleString()}</p>
           <p className="text-lg font-semibold text-gray-700">Current Value</p>
-          <p className="text-2xl text-teal-600">${currentValue.toLocaleString()}</p>
+          <p className="text-2xl text-teal-600">{currentValue.toLocaleString()}</p>
           <p className="text-lg font-semibold text-gray-700">Net Profit/Loss</p>
-          <p className={`text-2xl ${profitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-            ${profitLoss.toLocaleString()}
+          <p className={`text-2xl {profitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            {profitLoss.toLocaleString()}
           </p>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg">
