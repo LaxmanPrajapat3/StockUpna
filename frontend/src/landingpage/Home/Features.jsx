@@ -10,7 +10,7 @@ export default function Features() {
       title: "Smart Investment Assistant",
       desc: "Get answer and guidance through an interactive chat-based assistant",
       src: "../src/assets/Features_Logo_1.png",
-      href: "",
+      // href: "",
     },
     {
       title: "Learning Mode",
