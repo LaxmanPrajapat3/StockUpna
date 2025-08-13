@@ -23,7 +23,7 @@ return data;
   }
 
 
-  const [balance, setBalance] = useState(200000);
+  const [balance, setBalance] = useState(100000);
   const [holdings, setHoldings] = useState(0);
   const [profitLoss, setProfitLoss] = useState(0);
   const [investment, setInvestment] = useState(0);
@@ -39,7 +39,7 @@ useEffect(()=>{
   const  fetchData=async()=>{
     const data= await getData();
     if(data){
-      setBalance(data.balance || 200000);
+      setBalance(data.balance || 100000);
       setHoldings(data.holdings ||0);
       setProfitLoss(data.profitLoss || 0);
       setInvestment(data.investment || 0);

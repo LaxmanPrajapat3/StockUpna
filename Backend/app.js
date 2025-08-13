@@ -215,6 +215,7 @@ required:true,
 
 
 
+    const CustomAlerts= mongoose.model("CustomAlerts",AlertSchema);
 
 // to set custom-alerts
     app.post('/user/custom-alert',authenticateToken,async(req,res)=>{
@@ -223,7 +224,6 @@ required:true,
   console.log("User ID from token:", req.user.id);
 
 try{
-   const CustomAlerts= mongoose.model("CustomAlerts",AlertSchema);
  const newCustomAlert=  new CustomAlerts({
     price:price,
     stock:stock,
@@ -267,12 +267,12 @@ required:true,
     }
   });
 
+  const InvestmentGoal=mongoose.model("InvestmentGoal",InvesmentGoalSchema);
   //  To Set Investment Goals route
   app.post("/user/goals",authenticateToken,async(req,res)=>{
     try{
 const {goal,month,year}=req.body;
 console.log(goal,month,year);
-const InvestmentGoal=mongoose.model("InvestmentGoal",InvesmentGoalSchema);
 const newInvestGoal=new InvestmentGoal({
     goal:goal,
     month:month,
@@ -291,6 +291,30 @@ return res.status(201).json({message:"Custom Goals is set"},)
 
 
   })
+
+
+// create route to get info from data base and provide info to frontend
+
+app.get("/user/getGoalsAlerts", authenticateToken, async (req, res) => {
+  console.log(req.user.id);
+  try {
+const customAlertData=await  CustomAlerts.find({userId:req.user.id});
+    const investmentGoalData = await InvestmentGoal.find({ userId: req.user.id });
+
+    console.log(customAlertData);
+    console.log(investmentGoalData);
+    console.log("Your investment goal and stock price data is being fetched");
+
+    res.status(200).json({customAlertData,investmentGoalData});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
+
+
+
 // Define schema
 const userInvestSchema = new mongoose.Schema({
   userId: { type: String, required: true },
@@ -360,12 +384,29 @@ const updateedInfo=await UserInvestInfo.findOneAndUpdate({userId:req.user.id},{b
   }
 }); 
 
+
+
+
 app.get("/user/getInvestmentdata", authenticateToken,async(req,res)=>{
     console.log("this is working",req.user.id);
 const data=  await  UserInvestInfo.findOne({userId:req.user.id});
 console.log(data);
 res.send(data);
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.post('/api/chat', async (req, res) => {
@@ -430,3 +471,4 @@ async function getAIResponse(query) {
     return 'Sorry, I couldn’t process that. Try again!';
   }
 }
+
