@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../authCheckfunction/AuthProvider";
-
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Navbar({scrollTargets}) {
   const auth=useContext(AuthContext);
@@ -39,27 +39,30 @@ const handleScroll = (section) => {
   }
 
   // handleLogoutBtn
-  const handleLogoutBtn=async()=>{
-try{
+const handleLogoutBtn = async () => {
+  try {
+    const res = await fetch("http://localhost:8000/logout", {
+      method: "POST",
+      credentials: "include",
+    });
 
-    const res =await fetch("http://localhost:8000/logout",{method:"POST",credentials:"include"})
-
-if(res.ok){
-  setIsLoggedIn(false);
-
-  navigater("/");
-}
-}catch(error){
-
-  console.error("Logout failed:",error);
-}
-
-  };
-
+    if (res.ok) {
+      setIsLoggedIn(false);
+      toast.success("Logged out successfully!");
+      navigater("/");
+    } else {
+      toast.error("Logout failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Logout failed:", error);
+    toast.error("An error occurred while logging out.");
+  }
+};
   
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="max-w-6xl mx-auto   grid grid-cols-2 sm:grid-cols-2 items-center">
         
         {/* Left: Logo + Brand */}
@@ -83,10 +86,10 @@ if(res.ok){
           {!isLoggedIn ?(
 
 <>
-            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 " style={{borderRadius:'5px'}} onClick={handleLoginbtn} >Log in</button>
-            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 "style={{borderRadius:'5px'}} onClick={handleSingupbtn}>Sign up</button>
+            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer" style={{borderRadius:'5px'}} onClick={handleLoginbtn} >Log in</button>
+            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700  cursor-pointer"style={{borderRadius:'5px'}} onClick={handleSingupbtn}>Sign up</button>
 </>
-          ):(<button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 "style={{borderRadius:'5px'}} onClick={handleLogoutBtn}>Log Out</button>)}
+          ):(<button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer"style={{borderRadius:'5px'}} onClick={handleLogoutBtn}>Log Out</button>)}
 
 
         </div>

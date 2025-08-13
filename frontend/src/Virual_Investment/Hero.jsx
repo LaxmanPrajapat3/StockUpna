@@ -4,6 +4,8 @@ import BalanceCard from "./BalanceCard";
 import StockCard from "./StockCard";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast"; // ✅ import toast
+
 
 
 export default function Hero() {
@@ -142,7 +144,17 @@ const handleBuy = () => {
             setInvestment(prev => prev + totalCost);
             setHoldings(prev => prev + totalCost);
             setProfitLoss(prev => prev + (totalCost * selectedStock.change / 100));
+            toast.success(   `Bought ${quantity} ${selectedStock.symbol} stock(s) successfully!`);
         }
+
+        else{
+      toast.error("Not enough balance to buy!");
+    }
+    
+        
+    }
+    else{
+      toast.error("Stock is not aviable !")
     }
 };
 
@@ -175,7 +187,15 @@ const response=   axios.post('http://localhost:8000/user/investmentInfo', {
         setInvestment(prev => prev - totalValue);
         setHoldings(prev => prev - totalValue);
         setProfitLoss(prev => prev - (totalValue * selectedStock.change / 100));
+
+        toast.success(
+          `Sold ${quantity} ${selectedStock.symbol} stock(s) successfully!`
+        );
       }
+else{
+  toast.error("Not enough holdings to sell!");
+}
+
     }
   };
 
@@ -259,3 +279,4 @@ const response=   axios.post('http://localhost:8000/user/investmentInfo', {
   );
   
 }
+

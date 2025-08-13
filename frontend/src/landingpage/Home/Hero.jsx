@@ -9,9 +9,13 @@ export default function Hero(){
         A guiding hands-on platform for new investors to gain knowled
         about the stock market and track their portfolios
       </p>
-      <button className="bg-teal-600 text-white font-semibold py-2 px-6 rounded hover:bg-teal-700">
+      {/* <button className="bg-teal-600 text-white font-semibold py-2 px-6 rounded hover:bg-teal-700 cursor-not-allowed">
         Get Started
-      </button>
+      </button> */}
+      <button className="bg-teal-600 text-white font-semibold py-2 px-6 rounded hover:bg-teal-700 cursor-not-allowed">
+  Get Started
+</button>
+
     </section>
         </>
     )
