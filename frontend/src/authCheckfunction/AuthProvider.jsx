@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch("http://localhost:8000/verify", {
+      const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/verify`, {
         method: "GET",
         credentials: "include"
       });

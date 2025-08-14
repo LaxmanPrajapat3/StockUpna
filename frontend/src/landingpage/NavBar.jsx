@@ -41,7 +41,7 @@ const handleScroll = (section) => {
   // handleLogoutBtn
 const handleLogoutBtn = async () => {
   try {
-    const res = await fetch("http://localhost:8000/logout", {
+    const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/logout`, {
       method: "POST",
       credentials: "include",
     });

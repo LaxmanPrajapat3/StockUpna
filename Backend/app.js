@@ -13,14 +13,13 @@ const { default: axios } = require('axios');
 const JWT_SECRET=process.env.Secret_Key
 app.use(cors(
     {
-        origin: 'http://localhost:5173',  //frontend origin
+        origin: process.env.FRONTENDURL,  //frontend origin
         credentials:true // to allow cookies
 
 }));
 // middlewars 
 app.use(express.json()); // add this at top
 app.use(cookieParser());
-
 
 
 function authenticateToken(req,res,next){
@@ -43,12 +42,16 @@ const port =process.env.PORT || 8000;
 app.listen(port, () => {
     console.log("Server is listening on port 8000");
 });
+const URL=process.env.MONGO_ATLAS_URL;
 
 // MongoDB connection
 async function main() {
-  
+  try{
    await mongoose.connect(process.env.MONGO_ATLAS_URL);
-
+}
+catch(error){
+  console.log(error);
+}
 }
 
 main().then(() => {
@@ -84,6 +87,8 @@ app.post("/signup", async (req, res) => {
 
   const saltRound=10;
  const hashedPassword = await bcrypt.hash(password, saltRound);
+
+ 
     
   
         const newUser= new Userinfo({
@@ -164,6 +169,7 @@ app.get('/api/price/:symbol',async(req,res)=>{
     try{
         const {symbol}=req.params; //ex "AAPL" or "TCS.NS"
     const apikey=process.env.TWELVE_DATA_API_KEY;
+    (apikey);
     const response=await axios.get(`https://api.twelvedata.com/quote`,{
         params:{
             symbol:symbol,
@@ -221,8 +227,8 @@ required:true,
 // to set custom-alerts
     app.post('/user/custom-alert',authenticateToken,async(req,res)=>{
         const {price,stock}=req.body;
-        console.log("It route is working");
-  console.log("User ID from token:", req.user.id);
+        ("It route is working");
+  ("User ID from token:", req.user.id);
 
 try{
  const newCustomAlert=  new CustomAlerts({
@@ -273,7 +279,7 @@ required:true,
   app.post("/user/goals",authenticateToken,async(req,res)=>{
     try{
 const {goal,month,year}=req.body;
-console.log(goal,month,year);
+(goal,month,year);
 const newInvestGoal=new InvestmentGoal({
     goal:goal,
     month:month,
@@ -284,7 +290,7 @@ const data=await newInvestGoal.save();
 
 return res.status(201).json({message:"Custom Goals is set"},) 
     }catch(error){
-        console.log(error);
+        (error);
         if (!res.headersSent) {
             res.status(500).json({ message: "Something went wrong" });
         }
@@ -297,14 +303,14 @@ return res.status(201).json({message:"Custom Goals is set"},)
 // create route to get info from data base and provide info to frontend
 
 app.get("/user/getGoalsAlerts", authenticateToken, async (req, res) => {
-  console.log(req.user.id);
+  (req.user.id);
   try {
 const customAlertData=await  CustomAlerts.find({userId:req.user.id});
     const investmentGoalData = await InvestmentGoal.find({ userId: req.user.id });
 
-    console.log(customAlertData);
-    console.log(investmentGoalData);
-    console.log("Your investment goal and stock price data is being fetched");
+    (customAlertData);
+    (investmentGoalData);
+    ("Your investment goal and stock price data is being fetched");
 
     res.status(200).json({customAlertData,investmentGoalData});
   } catch (error) {
@@ -358,7 +364,7 @@ app.post("/user/investmentInfo", authenticateToken, async (req, res) => {
 
     const data = await newInvestment.save();
   
-    console.log("First investemnet for this user",data);
+    ("First investemnet for this user",data);
 
 
 
@@ -389,9 +395,9 @@ const updateedInfo=await UserInvestInfo.findOneAndUpdate({userId:req.user.id},{b
 
 
 app.get("/user/getInvestmentdata", authenticateToken,async(req,res)=>{
-    console.log("this is working",req.user.id);
+    ("this is working",req.user.id);
 const data=  await  UserInvestInfo.findOne({userId:req.user.id});
-console.log(data);
+(data);
 res.send(data);
 })
 
@@ -422,7 +428,7 @@ app.post('/api/chat', async (req, res) => {
   if (response.includes('I’m not sure')) {
     response = await getAIResponse(query);
   }
-  console.log(response);
+  (response);
 
   res.json({ reply: response });
 });
@@ -442,7 +448,7 @@ function getRuleBasedResponse(query) {
     return 'I’m not sure about that. Try asking about stocks, mutual funds, or investing basics!';
   }
 }
-console.log(process.env.GOOGLE_API_KEY);
+(process.env.GOOGLE_API_KEY);
 
 async function getAIResponse(query) {
   const apiKey = process.env.GOOGLE_API_KEY;

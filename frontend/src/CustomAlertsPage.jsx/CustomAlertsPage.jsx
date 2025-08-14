@@ -26,7 +26,7 @@ const CustomAlertsPage = () => {
   const handleSetAlert = async () => {
     if (!price) return setMessage('⚠️ Price is required.');
     try {
-      const res = await axios.post('http://localhost:8000/user/custom-alert', {
+      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user/custom-alert`, {
        
         stock,
         price: parseFloat(price)
@@ -42,7 +42,7 @@ const CustomAlertsPage = () => {
   const handleSaveGoal = async () => {
     if (!goal || !month || !year) return setMessage('⚠️ All fields are required.');
     try {
-      const res = await axios.post('http://localhost:8000/user/goals', {
+      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user/goals`, {
        
         goal,
         month,

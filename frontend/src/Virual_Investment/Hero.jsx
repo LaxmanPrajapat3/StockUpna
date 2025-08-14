@@ -12,7 +12,7 @@ export default function Hero() {
   const getData=async()=>{
 try{
 
-const response=await  fetch('http://localhost:8000/user/getInvestmentdata',{credentials:'include'});
+const response=await  fetch(`${import.meta.env.VITE_BACKENDURL}/user/getInvestmentdata`,{credentials:'include'});
 const data =await response.json();
 if(!data)return null;
 console.log(data.balance);
@@ -117,7 +117,8 @@ useEffect(()=>{
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:8000/api/price/${stock.symbol}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/api/price/${stock.symbol}`);
+
       const data = await res.json();
       console.log(data);
       setSelectedStock({
@@ -163,7 +164,7 @@ useEffect(() => {
     // This code will run whenever balance, investment, holdings, or profitLoss change
     const sendInvestmentData=async()=>{
       try{
-const response=   axios.post('http://localhost:8000/user/investmentInfo', {
+const response=   axios.post(`${import.meta.env.VITE_BACKENDURL}/user/investmentInfo`, {
         balance: balance,
         investment: investment,
         holdings: holdings,

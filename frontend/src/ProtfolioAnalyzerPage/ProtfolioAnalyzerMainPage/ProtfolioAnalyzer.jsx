@@ -19,7 +19,7 @@ const PortfolioAnalyzer = () => {
   const getData=async()=>{
 try{
 
-const response=await  fetch('http://localhost:8000/user/getInvestmentdata',{credentials:'include'});
+const response=await  fetch(`${import.meta.env.VITE_BACKENDURL}/user/getInvestmentdata`,{credentials:'include'});
 const data =await response.json();
 if(!data)return null;
 console.log(data.balance);
@@ -33,7 +33,7 @@ return data;
 
  const getGoalandAlertData = async () => {
   try {
-    const response = await fetch("http://localhost:8000/user/getGoalsAlerts", {
+    const response = await fetch(`${import.meta.env.VITE_BACKENDURL}/user/getGoalsAlerts`, {
       credentials: 'include'
     });
 
