@@ -75,10 +75,56 @@ const CustomAlertsPage = () => {
             onChange={(e) => setStock(e.target.value)}
             className="w-full border rounded-md p-2 mb-3"
           >
-            <option>INFY</option>
-            <option>TCS</option>
-            <option>RELIANCE</option>
-            <option>HDFC</option>
+          <option>AAPL</option>
+<option>MSFT</option>
+<option>GOOGL</option>
+<option>GOOG</option>
+<option>AMZN</option>
+<option>META</option>
+<option>TSLA</option>
+<option>NVDA</option>
+<option>NFLX</option>
+<option>INTC</option>
+<option>ORCL</option>
+<option>IBM</option>
+<option>PEP</option>
+<option>KO</option>
+<option>WMT</option>
+<option>PFE</option>
+<option>JNJ</option>
+<option>XOM</option>
+<option>CVX</option>
+<option>DIS</option>
+<option>CSCO</option>
+<option>CRM</option>
+<option>BMY</option>
+<option>ABT</option>
+<option>MRK</option>
+<option>MCD</option>
+<option>NKE</option>
+<option>BA</option>
+<option>VZ</option>
+<option>T</option>
+<option>WBA</option>
+<option>C</option>
+<option>BAC</option>
+<option>JPM</option>
+<option>GS</option>
+<option>AXP</option>
+<option>PYPL</option>
+<option>ADBE</option>
+<option>AMD</option>
+<option>QCOM</option>
+<option>SPGI</option>
+<option>BLK</option>
+<option>UPS</option>
+<option>FDX</option>
+<option>EBAY</option>
+<option>LYFT</option>
+<option>UBER</option>
+<option>SHOP</option>
+<option>SNOW</option>
+
           </select>
 
           <label className="block text-sm font-medium mb-1">Alert me if price crosses</label>

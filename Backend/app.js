@@ -20,7 +20,7 @@ app.use(cors(
 // middlewars 
 app.use(express.json()); // add this at top
 app.use(cookieParser());
-// app.use('/api',router);
+
 
 
 function authenticateToken(req,res,next){
@@ -38,9 +38,9 @@ function authenticateToken(req,res,next){
             next();
     })
 }
+const port =process.env.PORT || 8000;
 
-
-app.listen(8000, () => {
+app.listen(port, () => {
     console.log("Server is listening on port 8000");
 });
 
