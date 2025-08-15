@@ -1,40 +1,45 @@
+
 import { motion } from "framer-motion";
+
+// ✅ Import images so Vite can process them
+import FeaturesLogo1 from "../../assets/Features_Logo_1.png";
+import LearningModeLogo from "../../assets/Learning_Mode_Logo.png";
+import PortfolioAnalyzerLogo from "../../assets/Protfolio_Analyzer_Logo.png";
+import CustomAlertsLogo from "../../assets/Custom_Aletrs_Logo.png";
+import VirtualInvestmentLogo from "../../assets/virtual_investment.png";
 
 import Chatbot from "../Chatbot";
 
 export default function Features() {
-  
-
   const features = [
     {
       title: "Smart Investment Assistant",
       desc: "Get answer and guidance through an interactive chat-based assistant",
-      src: "../src/assets/Features_Logo_1.png",
-      // href: "",
+      src: FeaturesLogo1,
     },
     {
       title: "Learning Mode",
       desc: "Explore educational courses and tutorial’s at your own pace",
-      src: "../src/assets/Learning_Mode_Logo.png",
+      src: LearningModeLogo,
       href: "/learnmode",
     },
     {
       title: "Portfolio Analyzer",
       desc: "View insights into your portfolio’s performance and allocation",
-      src: "../src/assets/Protfolio_Analyzer_Logo.png",
+      src: PortfolioAnalyzerLogo,
       href: "/protfolio",
     },
     {
       title: "Custom Alerts & Goals",
       desc: "Set investment goals and get notified of key changes in the market",
-      src: "../src/assets/Custom_Aletrs_Logo.png",
+      src: CustomAlertsLogo,
       href: "/customAlerts",
     },
     {
-      title: "Virtual Trading"
-    ,desc: "Learn Investment Virually",
-    src:"../src/assets/virtual_investment.png",
-    href:"/virtualInvestment",
+      title: "Virtual Trading",
+      desc: "Learn Investment Virtually",
+      src: VirtualInvestmentLogo,
+      href: "/virtualInvestment",
     }
   ];
 
