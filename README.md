@@ -1,121 +1,105 @@
-📈 StockUpna – Your AI-Powered Virtual Stock Market Platform
+# 📈 StockUpNa — Learn Stock Trading Without Risk
 
-StockUpna is a full-stack, responsive stock market web application inspired by Zerodha, but reimagined for beginners and investment enthusiasts. Designed to simulate real trading experiences, guide new users, and analyze investment behavior — all in one place.
+StockUpNa is a **virtual investment learning platform** built with the **MERN stack** that helps beginners practice stock trading without losing real money.  
+It combines **live market data**, **AI-powered guidance**, and **portfolio analysis** to bridge the gap between theory and real-world investing.
 
-🚀 Built for internship showcases, hackathons, and product-based job interviews.
+Live Demo: https://stockupna-056b.onrender.com
+ 
+---
 
-🧪 Note: This project is currently under active development. Some features may be incomplete or undergoing improvement.
+## 🚀 Features
 
-🌟 Features
+### 🧩 Authentication & Onboarding
+- Secure Login/Signup with validation
+- Role-based dashboards: Beginner / Investor
 
-🧩 1. Authentication & User Onboarding
+### 📈 Live Stock Dashboard
+- Real-time stock prices from [Twelve Data API](https://twelvedata.com/)
+- Interactive charts & analytics
+- Dummy Buy/Sell trades stored in MongoDB
 
-🔒 Secure Login & Signup with validation
+### 💰 Virtual Trading Mode
+- Start with ₹1,00,000 virtual balance
+- Track profit/loss and holdings
+- Leaderboard for friendly competition
 
-🔐 Email and mobile authentication via Firebase
+### 📊 Portfolio Analyzer
+- Diversification Score (e.g., “You hold 90% tech”)
+- Sector-wise breakdown (Pie Chart)
+- Risk level based on volatility
+- Personalized suggestions for balance
 
-👤 Role-based redirection (Beginner / Investor)
+### 🤖 Smart Investment Assistant
+- AI chatbot powered by OpenAI API
+- Answers finance & investment questions
 
-📈 2. Live Dashboard with Stock Prices
+### 🔔 Custom Stock Alerts & Goals
+- Set alerts like “INFY > ₹1,500”
+- Set investment goals & get notified
 
-📊 Real-time stock data fetched using Alpha Vantage / Twelve Data APIs
+### 📚 Learning Mode
+- Courses: Stock Market Basics, Mutual Funds 101
+- Quizzes to reinforce learning
 
-📉 Interactive stock charts (Recharts.js)
+---
 
-💸 Simulated Buy/Sell functionality with local/in-memory storage
+## 🛠 Tech Stack
 
-🧠 3. Virtual Trading Mode
+**Frontend:**  
+- React 19, Tailwind CSS, MUI  
+- Framer Motion animations  
+- React Router, React Hot Toast, Lucide React Icons  
 
-🪙 Starts users with ₹1,00,000 in virtual funds
+**Backend:**  
+- Node.js, Express 5  
+- MongoDB with Mongoose ORM  
+- JWT Authentication  
 
-📃 Trade tracking and performance analytics
+**APIs & Tools:**  
+- Twelve Data API (Live prices)  
+- OpenAI API (AI Assistant)  
+- Axios for API requests  
 
-🏆 Leaderboard to encourage competition and growth
-
-📊 4. Portfolio Analyzer
-
-🧮 Portfolio summary: investment vs. current value
-
-🟢 Pie charts for sector and asset type allocation
-
-⚖️ Risk Level Indicator (Low/Medium/High)
-
-💡 Smart suggestions: e.g., "Reduce tech sector exposure"
-
-🤖 5. Smart Investment Assistant
-
-💬 Built-in AI assistant powered by ChatGPT / Hugging Face API
-
-🧠 Answers questions like "What is SIP?" or "Should I buy this stock?"
-
-🤝 Empowers beginner investors with contextual help
-
-📰 6. News + Sentiment Dashboard
-
-🗞️ Top 5 financial headlines from NewsAPI
-
-❤️ Sentiment analysis (Positive, Negative, Neutral)
-
-🔍 Relevance scoring based on user's portfolio
-
-🔔 7. Custom Alerts & Goals
-
-🔔 Set personal price alerts ("Alert if TCS > ₹3500")
-
-🎯 Define savings/investment goals
-
-📬 In-app or email notifications
-
-📅 8. IPO Tracker (Bonus Feature)
-
-📋 Track upcoming IPOs
-
-📆 Add reminders to Google Calendar
-
-🏷️ Tag IPOs by risk/popularity
-
-💻 Tech Stack
-
-Frontend:
-
-React.js + Tailwind CSS
-
-Chart.js / Recharts for graphs
-
-Framer Motion (animations)
-
-Backend:
-
-Node.js + Express.js (planned or optional)
-
-Firebase Auth & Firestore (authentication + DB)
-
-REST APIs for stocks/news/sentiment
+---
 
 
+---
 
-🛠️ How to Run
+## ⚙️ Installation & Setup
 
-# Clone the repo
-git clone https://github.com/your-username/stockupna.git
-cd stockupna/frontend/my-app 
+1. **Clone the repository**
+   ```bash
+     git clone https://github.com/LaxmanPrajapat3/StockUpna.git
+     cd stockupna
+2. **Install dependencies**
+    cd frontend
+    npm install
 
-# Install dependencies
-npm install
+    cd Backend
+    npm install
+3.  Create .env in both frontend & backend folders
+Add:   
+Frontend env:
+   VITE_FRONTENDURL=http://localhost:5173
+   VITE_BACKENDURL=http://localhost:8000
+Backend env:   
+   FRONTENDURL=http://localhost:5173
+   BACKENDURL=http://localhost:8000
+   GOOGLE_API_KEY=your_api_key
+   MONGO_ATLAS_URL=your_mongo_connection
+   Secret_Key=you can add randm key
+   TWELVE_DATA_API_KEY=your_api_key
+    
+4 .  Run the development servers
+  Backend : 
+             cd backend
+             npm start
+  Frontend : 
+             cd frontend
+             npm run dev
 
-# Start frontend
-npm run dev
 
 🤝 Contributing
 
-Contributions are welcome! If you have feature ideas or fixes, feel free to fork and submit a PR.
+Pull requests are welcome. For major changes, please open an issue first to discuss your ideas.
 
-📬 Contact
-
-💼 LinkedIn: Your Name
-
-💻 Portfolio: yourwebsite.com
-
-🚨 NOTE: This is a simulation platform and does not involve real trading.
-
-⭐️ Star the repo if you found it useful!
