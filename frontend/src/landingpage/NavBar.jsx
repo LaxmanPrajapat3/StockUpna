@@ -1,97 +1,106 @@
-import { useState ,useEffect} from "react";
-import { Menu, SearchCheck, Section, X } from "lucide-react";
+
+
+import { useState, useEffect, useContext } from "react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../authCheckfunction/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function Navbar({scrollTargets}) {
-  const auth=useContext(AuthContext);
-  if(!auth) return null;
-  const {isLoggedIn,setIsLoggedIn,checkAuth}=auth;
+// ✅ Import logo so Vite bundles it correctly
+import MainLogo from "../assets/MainLogo.png";
+
+export default function Navbar({ scrollTargets }) {
+  const auth = useContext(AuthContext);
+  if (!auth) return null;
+
+  const { isLoggedIn, setIsLoggedIn } = auth;
   const [isOpen, setIsOpen] = useState(false);
- 
-const handleScroll = (section) => {
+  const navigater = useNavigate();
+
+  const handleScroll = (section) => {
     if (scrollTargets && scrollTargets[section]?.current) {
       scrollTargets[section].current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  
-
-  const navigater=useNavigate();
   const navLinks = [
-    
-    { name: "Features", action:()=>handleScroll("features")},
-    { name: "About", action:()=>handleScroll("about") },
+    { name: "Features", action: () => handleScroll("features") },
+    { name: "About", action: () => handleScroll("about") },
   ];
 
-  const  handleLoginbtn=()=>{
-    navigater('/login');
+  const handleLoginbtn = () => navigater("/login");
+  const handleSingupbtn = () => navigater("/signup");
 
-  }
-  const  handleSingupbtn=()=>{
-    navigater('/signup');
+  const handleLogoutBtn = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
 
-
-
-  }
-
-  // handleLogoutBtn
-const handleLogoutBtn = async () => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (res.ok) {
-      setIsLoggedIn(false);
-      toast.success("Logged out successfully!");
-      navigater("/");
-    } else {
-      toast.error("Logout failed. Please try again.");
+      if (res.ok) {
+        setIsLoggedIn(false);
+        toast.success("Logged out successfully!");
+        navigater("/");
+      } else {
+        toast.error("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("An error occurred while logging out.");
     }
-  } catch (error) {
-    console.error("Logout failed:", error);
-    toast.error("An error occurred while logging out.");
-  }
-};
-  
+  };
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="max-w-6xl mx-auto   grid grid-cols-2 sm:grid-cols-2 items-center">
-        
+      <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-2 items-center">
         {/* Left: Logo + Brand */}
         <a href="/">
-        
-        <div className="flex items-center gap-2">
-          <img src="../src/assets/MainLogo.png" alt="Logo" className="h-26 w-26" />
-        </div>
+          <div className="flex items-center gap-2">
+            <img src={MainLogo} alt="Logo" className="h-26 w-26" />
+          </div>
         </a>
-          
 
         {/* Desktop Nav */}
         <div className="hidden sm:flex justify-end items-center space-x-6">
           {navLinks.map((link) => (
-            <a key={link.name} onClick={link.action}className="text-gray-700 hover:text-teal-600 font-medium cursor-pointer">
+            <a
+              key={link.name}
+              onClick={link.action}
+              className="text-gray-700 hover:text-teal-600 font-medium cursor-pointer"
+            >
               {link.name}
             </a>
           ))}
 
-          
-          {!isLoggedIn ?(
-
-<>
-            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer" style={{borderRadius:'5px'}} onClick={handleLoginbtn} >Log in</button>
-            <button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700  cursor-pointer"style={{borderRadius:'5px'}} onClick={handleSingupbtn}>Sign up</button>
-</>
-          ):(<button className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer"style={{borderRadius:'5px'}} onClick={handleLogoutBtn}>Log Out</button>)}
-
-
+          {!isLoggedIn ? (
+            <>
+              <button
+                className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer"
+                style={{ borderRadius: "5px" }}
+                onClick={handleLoginbtn}
+              >
+                Log in
+              </button>
+              <button
+                className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer"
+                style={{ borderRadius: "5px" }}
+                onClick={handleSingupbtn}
+              >
+                Sign up
+              </button>
+            </>
+          ) : (
+            <button
+              className="text-red-50 font-medium bg-teal-600 p-1 hover:bg-teal-700 cursor-pointer"
+              style={{ borderRadius: "5px" }}
+              onClick={handleLogoutBtn}
+            >
+              Log Out
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -113,28 +122,43 @@ const handleLogoutBtn = async () => {
           >
             <div className="flex flex-col items-center space-y-4 py-4">
               {navLinks.map((link) => (
-                <a key={link.name} onClick={link.action} className="text-gray-700 font-medium cursor-pointer">
+                <a
+                  key={link.name}
+                  onClick={link.action}
+                  className="text-gray-700 font-medium cursor-pointer"
+                >
                   {link.name}
                 </a>
               ))}
-              
-              
-              {!isLoggedIn &&(
+
+              {!isLoggedIn && (
                 <>
-              
-              <button className="text-gray-50 font-medium bg-teal-600 p-1 " onClick={handleLoginbtn} style={{borderRadius:'5px'}}>Log in</button>
-              <button className="text-gray-50 font-medium bg-teal-600 p-1  " onClick={handleSingupbtn} style={{borderRadius:'5px'}}>Sign up</button>
+                  <button
+                    className="text-gray-50 font-medium bg-teal-600 p-1"
+                    onClick={handleLoginbtn}
+                    style={{ borderRadius: "5px" }}
+                  >
+                    Log in
+                  </button>
+                  <button
+                    className="text-gray-50 font-medium bg-teal-600 p-1"
+                    onClick={handleSingupbtn}
+                    style={{ borderRadius: "5px" }}
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
 
-              
-              
-              </>)}
-{isLoggedIn &&( 
-
-
-                 <button className="text-gray-50 font-medium bg-teal-600 p-1  " onClick={handleLogoutBtn} style={{borderRadius:'5px'}}>Logout</button>
-)}
-              
-
+              {isLoggedIn && (
+                <button
+                  className="text-gray-50 font-medium bg-teal-600 p-1"
+                  onClick={handleLogoutBtn}
+                  style={{ borderRadius: "5px" }}
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </motion.div>
         )}
