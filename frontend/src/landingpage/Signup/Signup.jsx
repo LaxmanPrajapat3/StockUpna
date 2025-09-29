@@ -1,10 +1,10 @@
 
-
+const backendURL=import.meta.env.VITE_BACKENDURL
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+console.log(`${backendURL}/signup`);
 export default function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ export default function Signup() {
     event.preventDefault(); // prevent form reload
 
     try {
-      const res = await fetch("http://localhost:8000/signup", {
+      const res = await fetch(`${backendURL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
